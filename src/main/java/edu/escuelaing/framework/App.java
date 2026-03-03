@@ -1,18 +1,16 @@
-package main.java.edu.escuelaing.framework;
+package edu.escuelaing.framework;
 
-import static main.java.edu.escuelaing.framework.Spark.*;
-
+import static edu.escuelaing.framework.Spark.*;
 /**
- * Example application demonstrating how to use the web framework.
- *
- * Registers REST services and start the HTTP server.
+ * Entry point of the web application.
+ * Registers REST routes using lambda functions and starts the HTTP server.
  *
  * Available endpoints:
- *   GET http://localhost:35000/App/hello?name=Pedro → "Hello Pedro"
- *   GET http://localhost:35000/App/pi → "3.141592653589793"
- *   GET http://localhost:35000/App/euler → "2.718281828459045"
- *   GET http://localhost:35000/index.html → static HTML page
- *   GET http://localhost:35000/<unknown>  → "Hello World!"
+ *   GET http://localhost:35000/App/hello?name=Pedro  → "Hello Pedro"
+ *   GET http://localhost:35000/App/pi                → "3.141592653589793"
+ *   GET http://localhost:35000/App/euler             → "2.718281828459045"
+ *   GET http://localhost:35000/index.html            → static HTML page
+ *   GET http://localhost:35000/<unknown>             → "Hello World!"
  */
 public class App {
 
@@ -30,7 +28,6 @@ public class App {
         get("/App/euler", (req, res) ->
                 String.valueOf(Math.E)
         );
-
         HttpServer.main(args);
     }
 }

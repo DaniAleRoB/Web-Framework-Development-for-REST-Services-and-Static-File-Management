@@ -1,4 +1,4 @@
-package main.java.edu.escuelaing.framework;
+package edu.escuelaing.framework;
 
 import java.io.File;
 import java.io.IOException;

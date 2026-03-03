@@ -63,7 +63,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>main.java.edu.escuelaing.framework.App</mainClass>
+                            <mainClass>edu.escuelaing.framework.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

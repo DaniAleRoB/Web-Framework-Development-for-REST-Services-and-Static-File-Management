@@ -1,4 +1,4 @@
-package main.java.edu.escuelaing.framework;
+package edu.escuelaing.framework;
 
 import java.net.URI;
 import java.net.URLDecoder;
@@ -29,7 +29,7 @@ public class Request {
         String[] pairs = query.split("&");
         for (String pair : pairs) {
             String[] keyValue = pair.split("=", 2);
-            String key = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
+            String key   = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
             String value = keyValue.length > 1
                     ? URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8)
                     : "";

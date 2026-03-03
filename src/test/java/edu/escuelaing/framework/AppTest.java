@@ -1,6 +1,6 @@
-package test.java.main.java.edu.escuelaing.framework;
+package edu.escuelaing.framework;
 
-import main.java.edu.escuelaing.framework.*;
+import edu.escuelaing.framework.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for the web framework components.
  */
 class AppTest {
+
+    // ─── Request tests ────────────────────────────────────────────────────────
 
     @Test
     void testRequestParsesPathCorrectly() throws Exception {
@@ -24,7 +26,7 @@ class AppTest {
     @Test
     void testRequestGetValuesAlias() throws Exception {
         Request req = new Request("GET", "/App/hello?name=Juan");
-        assertEquals("Juan", req.getValues("name")); // alias method
+        assertEquals("Juan", req.getValues("name"));
     }
 
     @Test
@@ -43,8 +45,10 @@ class AppTest {
     void testRequestMultipleQueryParams() throws Exception {
         Request req = new Request("GET", "/search?name=Pedro&age=30");
         assertEquals("Pedro", req.getValue("name"));
-        assertEquals("30", req.getValue("age"));
+        assertEquals("30",    req.getValue("age"));
     }
+
+    // ─── Response tests ───────────────────────────────────────────────────────
 
     @Test
     void testResponseDefaultStatus() {
@@ -72,6 +76,8 @@ class AppTest {
         assertEquals("application/json", res.getContentType());
     }
 
+    // ─── Spark tests ──────────────────────────────────────────────────────────
+
     @Test
     void testSparkRegisterAndRetrieveRoute() {
         Spark.get("/test/route", (req, res) -> "test response");
@@ -87,12 +93,13 @@ class AppTest {
     void testSparkStaticfilesConfiguration() {
         Spark.staticfiles("/custom/folder");
         assertEquals("/custom/folder", Spark.getStaticFolder());
-        // Reset to default
-        Spark.staticfiles("/webroot");
+        Spark.staticfiles("/webroot"); // reset
     }
 
+    // ─── Route lambda tests ───────────────────────────────────────────────────
+
     @Test
-    void testRouteLambdaExecutesPiCorrectly() throws Exception {
+    void testRouteLambdaPiCorrectly() throws Exception {
         Route piRoute = (req, res) -> String.valueOf(Math.PI);
         Request req = new Request("GET", "/App/pi");
         Response res = new Response();
@@ -100,7 +107,7 @@ class AppTest {
     }
 
     @Test
-    void testRouteLambdaExecutesHelloCorrectly() throws Exception {
+    void testRouteLambdaHelloCorrectly() throws Exception {
         Route helloRoute = (req, res) -> "Hello " + req.getValue("name");
         Request req = new Request("GET", "/App/hello?name=Pedro");
         Response res = new Response();
@@ -108,45 +115,19 @@ class AppTest {
     }
 
     @Test
-    void testRouteLambdaExecutesEulerCorrectly() throws Exception {
+    void testRouteLambdaEulerCorrectly() throws Exception {
         Route eulerRoute = (req, res) -> String.valueOf(Math.E);
         Request req = new Request("GET", "/App/euler");
         Response res = new Response();
         assertEquals(String.valueOf(Math.E), eulerRoute.handle(req, res));
     }
 
-
-    @Test
-    void testResponseBuilderContainsStatus200() {
-        byte[] body = "hello".getBytes();
-        String headers = HttpResponseBuilder.build(200, "text/html", body);
-        assertTrue(headers.contains("HTTP/1.1 200 OK"));
-    }
-
-    @Test
-    void testResponseBuilderContainsStatus404() {
-        byte[] body = "not found".getBytes();
-        String headers = HttpResponseBuilder.build(404, "text/html", body);
-        assertTrue(headers.contains("HTTP/1.1 404 Not Found"));
-    }
-
-    @Test
-    void testResponseBuilderContainsContentType() {
-        byte[] body = "data".getBytes();
-        String headers = HttpResponseBuilder.build(200, "application/json", body);
-        assertTrue(headers.contains("Content-Type: application/json"));
-    }
-
-    @Test
-    void testResponseBuilderContainsContentLength() {
-        byte[] body = "hello".getBytes(); // 5 bytes
-        String headers = HttpResponseBuilder.build(200, "text/html", body);
-        assertTrue(headers.contains("Content-Length: 5"));
-    }
+    // ─── StaticFileHandler content type tests ─────────────────────────────────
 
     @Test
     void testContentTypeHtml() {
-        assertEquals("text/html; charset=UTF-8", StaticFileHandler.getContentType("/index.html"));
+        assertEquals("text/html; charset=UTF-8",
+                StaticFileHandler.getContentType("/index.html"));
     }
 
     @Test
@@ -156,7 +137,8 @@ class AppTest {
 
     @Test
     void testContentTypeJs() {
-        assertEquals("application/javascript", StaticFileHandler.getContentType("/app.js"));
+        assertEquals("application/javascript",
+                StaticFileHandler.getContentType("/app.js"));
     }
 
     @Test

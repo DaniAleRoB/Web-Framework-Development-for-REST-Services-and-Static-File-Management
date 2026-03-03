@@ -1,4 +1,4 @@
-package main.java.edu.escuelaing.framework;
+package edu.escuelaing.framework;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.Map;
  * Provides static methods to register GET routes and configure static file location.
  *
  * Usage example:
- *   Spark.get("/hello", (req, res) -> "Hello " + req.getValue("name"));
+ *   Spark.get("/App/hello", (req, res) -> "Hello " + req.getValue("name"));
  *   Spark.staticfiles("/webroot");
  */
 public class Spark {
